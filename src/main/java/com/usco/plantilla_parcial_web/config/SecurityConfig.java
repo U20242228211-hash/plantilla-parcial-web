@@ -1,5 +1,6 @@
 package com.usco.plantilla_parcial_web.config;
 
+import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,8 +20,10 @@ public class SecurityConfig {
 		http
 				// Define que rutas puede consultar cada rol.
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/login", "/css/**", "/js/**", "/images/**", "/swagger-ui/**",
-								"/swagger-ui.html", "/v3/api-docs/**")
+						.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR)
+						.permitAll()
+						.requestMatchers("/login", "/procesar-login", "/acceso-denegado", "/css/**", "/js/**",
+								"/images/**", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**")
 						.permitAll()
 						.requestMatchers("/vehiculos/nuevo", "/vehiculos/guardar", "/vehiculos/editar/**",
 								"/vehiculos/actualizar/**", "/vehiculos/eliminar/**")
@@ -36,12 +39,14 @@ public class SecurityConfig {
 				// Usa una pagina JSP propia para iniciar sesion.
 				.formLogin(form -> form
 						.loginPage("/login")
+						.loginProcessingUrl("/procesar-login")
 						.defaultSuccessUrl("/", true)
+						.failureUrl("/login?error=true")
 						.permitAll())
 				// Cierra la sesion y vuelve al formulario de login.
 				.logout(logout -> logout
 						.logoutUrl("/logout")
-						.logoutSuccessUrl("/login?logout")
+						.logoutSuccessUrl("/login?logout=true")
 						.invalidateHttpSession(true)
 						.deleteCookies("JSESSIONID")
 						.permitAll())

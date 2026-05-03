@@ -23,7 +23,7 @@
 							<div class="alert alert-success" role="alert">Sesión cerrada correctamente.</div>
 						</c:if>
 
-						<form action="${pageContext.request.contextPath}/login" method="post">
+						<form action="${pageContext.request.contextPath}/procesar-login" method="post">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 
 							<div class="mb-3">
