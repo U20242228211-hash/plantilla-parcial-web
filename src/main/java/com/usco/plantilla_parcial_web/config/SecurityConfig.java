@@ -30,7 +30,7 @@ public class SecurityConfig {
 						.hasAuthority("ROLE_ADMINISTRADOR")
 						.requestMatchers("/vehiculos/ubicacion/**")
 						.hasAnyAuthority("ROLE_ADMINISTRADOR", "ROLE_ACOMODADOR")
-						.requestMatchers("/vehiculos/**")
+						.requestMatchers("/vehiculos", "/vehiculos/**")
 						.hasAnyAuthority("ROLE_ADMINISTRADOR", "ROLE_ACOMODADOR", "ROLE_CLIENTE")
 						.requestMatchers("/admin/**")
 						.hasAuthority("ROLE_ADMINISTRADOR")
