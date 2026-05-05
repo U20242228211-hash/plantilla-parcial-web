@@ -25,11 +25,11 @@
 						<div class="row">
 							<div class="col-md-6 mb-3">
 								<label for="horaEntrada" class="form-label">Hora entrada</label>
-								<input type="number" class="form-control" id="horaEntrada" name="horaEntrada" value="${vehiculo.horaEntrada}" required>
+								<input type="time" class="form-control" id="horaEntrada" name="horaEntrada" value="${vehiculo.horaEntradaFormato}" step="60" required>
 							</div>
 							<div class="col-md-6 mb-3">
 								<label for="horaSalida" class="form-label">Hora salida</label>
-								<input type="number" class="form-control" id="horaSalida" name="horaSalida" value="${vehiculo.horaSalida}">
+								<input type="time" class="form-control" id="horaSalida" name="horaSalida" value="${vehiculo.horaSalidaFormato}" step="60">
 							</div>
 						</div>
 

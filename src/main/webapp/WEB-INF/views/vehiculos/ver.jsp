@@ -22,12 +22,12 @@
 							<dd class="col-sm-8">${vehiculo.placa}</dd>
 
 							<dt class="col-sm-4">Hora entrada</dt>
-							<dd class="col-sm-8">${vehiculo.horaEntrada}</dd>
+							<dd class="col-sm-8">${vehiculo.horaEntradaFormato}</dd>
 
 							<dt class="col-sm-4">Hora salida</dt>
 							<dd class="col-sm-8">
 								<c:choose>
-									<c:when test="${vehiculo.horaSalida != null}">${vehiculo.horaSalida}</c:when>
+									<c:when test="${vehiculo.horaSalida != null}">${vehiculo.horaSalidaFormato}</c:when>
 									<c:otherwise>Sin salida</c:otherwise>
 								</c:choose>
 							</dd>

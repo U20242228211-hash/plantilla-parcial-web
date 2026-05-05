@@ -1,5 +1,7 @@
 package com.usco.plantilla_parcial_web.config;
 
+import java.time.LocalTime;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -72,16 +74,42 @@ public class DataInitializer implements CommandLineRunner {
 	}
 
 	private void crearVehiculos() {
-		crearVehiculoSiNoExiste("ABC123", 8, null, "A-1", "Carro");
-		crearVehiculoSiNoExiste("XYZ789", 9, null, "B-2", "Moto");
-		crearVehiculoSiNoExiste("KLM456", 10, 12, "C-3", "Camioneta");
+		crearOActualizarVehiculoInicial("ABC123", LocalTime.of(8, 0), null, "A-1", "Carro");
+		crearOActualizarVehiculoInicial("XYZ789", LocalTime.of(9, 0), null, "B-2", "Moto");
+		crearOActualizarVehiculoInicial("KLM456", LocalTime.of(10, 0), LocalTime.of(12, 0), "C-3", "Camioneta");
+		corregirHorasGuardadasComoSegundos();
 	}
 
-	private void crearVehiculoSiNoExiste(String placa, Integer horaEntrada, Integer horaSalida, String ubicacion,
+	private void crearOActualizarVehiculoInicial(String placa, LocalTime horaEntrada, LocalTime horaSalida, String ubicacion,
 			String nombreTipoVehiculo) {
-		if (!vehiculoRepository.existsByPlaca(placa)) {
-			TipoVehiculo tipoVehiculo = tipoVehiculoRepository.findByNombre(nombreTipoVehiculo).orElseThrow();
-			vehiculoRepository.save(new Vehiculo(null, placa, horaEntrada, horaSalida, ubicacion, tipoVehiculo));
+		TipoVehiculo tipoVehiculo = tipoVehiculoRepository.findByNombre(nombreTipoVehiculo).orElseThrow();
+		Vehiculo vehiculo = vehiculoRepository.findByPlaca(placa)
+				.orElse(new Vehiculo(null, placa, horaEntrada, horaSalida, ubicacion, tipoVehiculo));
+
+		vehiculo.setHoraEntrada(horaEntrada);
+		vehiculo.setHoraSalida(horaSalida);
+		vehiculo.setUbicacion(ubicacion);
+		vehiculo.setTipoVehiculo(tipoVehiculo);
+		vehiculoRepository.save(vehiculo);
+	}
+
+	private void corregirHorasGuardadasComoSegundos() {
+		vehiculoRepository.findAll().forEach(vehiculo -> {
+			vehiculo.setHoraEntrada(corregirHora(vehiculo.getHoraEntrada()));
+			vehiculo.setHoraSalida(corregirHora(vehiculo.getHoraSalida()));
+			vehiculoRepository.save(vehiculo);
+		});
+	}
+
+	private LocalTime corregirHora(LocalTime hora) {
+		if (hora == null) {
+			return null;
 		}
+
+		if (hora.getHour() == 0 && hora.getMinute() == 0 && hora.getSecond() >= 1 && hora.getSecond() <= 23) {
+			return LocalTime.of(hora.getSecond(), 0);
+		}
+
+		return hora.withSecond(0).withNano(0);
 	}
 }

@@ -16,6 +16,6 @@ USE plantilla_parcial_web;
 -- Carro, Moto, Camioneta
 --
 -- Vehiculos de prueba:
--- ABC123 / 8 / null / A-1 / Carro
--- XYZ789 / 9 / null / B-2 / Moto
--- KLM456 / 10 / 12 / C-3 / Camioneta
+-- ABC123 / 08:00 / null / A-1 / Carro
+-- XYZ789 / 09:00 / null / B-2 / Moto
+-- KLM456 / 10:00 / 12:00 / C-3 / Camioneta

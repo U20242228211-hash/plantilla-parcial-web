@@ -17,11 +17,11 @@
 				<div class="card mb-3">
 					<div class="card-body">
 						<p class="mb-1"><strong>Placa:</strong> ${vehiculo.placa}</p>
-						<p class="mb-1"><strong>Hora entrada:</strong> ${vehiculo.horaEntrada}</p>
+						<p class="mb-1"><strong>Hora entrada:</strong> ${vehiculo.horaEntradaFormato}</p>
 						<p class="mb-1">
 							<strong>Hora salida:</strong>
 							<c:choose>
-								<c:when test="${vehiculo.horaSalida != null}">${vehiculo.horaSalida}</c:when>
+								<c:when test="${vehiculo.horaSalida != null}">${vehiculo.horaSalidaFormato}</c:when>
 								<c:otherwise>Sin salida</c:otherwise>
 							</c:choose>
 						</p>

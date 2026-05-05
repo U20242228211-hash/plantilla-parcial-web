@@ -12,6 +12,8 @@ public interface VehiculoRepository extends JpaRepository<Vehiculo, Long> {
 
 	boolean existsByPlaca(String placa);
 
+	Optional<Vehiculo> findByPlaca(String placa);
+
 	@Override
 	@EntityGraph(attributePaths = "tipoVehiculo")
 	List<Vehiculo> findAll();

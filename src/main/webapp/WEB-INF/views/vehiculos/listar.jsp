@@ -43,10 +43,10 @@
 					<c:forEach var="vehiculo" items="${vehiculos}">
 						<tr>
 							<td>${vehiculo.placa}</td>
-							<td>${vehiculo.horaEntrada}</td>
+							<td>${vehiculo.horaEntradaFormato}</td>
 							<td>
 								<c:choose>
-									<c:when test="${vehiculo.horaSalida != null}">${vehiculo.horaSalida}</c:when>
+									<c:when test="${vehiculo.horaSalida != null}">${vehiculo.horaSalidaFormato}</c:when>
 									<c:otherwise>Sin salida</c:otherwise>
 								</c:choose>
 							</td>
