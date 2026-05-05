@@ -3,6 +3,8 @@ package com.usco.plantilla_parcial_web.entity;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -39,10 +41,12 @@ public class Vehiculo {
 
 	@NotNull
 	@DateTimeFormat(pattern = "HH:mm")
+	@JsonFormat(pattern = "HH:mm")
 	@Column(nullable = false)
 	private LocalTime horaEntrada;
 
 	@DateTimeFormat(pattern = "HH:mm")
+	@JsonFormat(pattern = "HH:mm")
 	private LocalTime horaSalida;
 
 	@NotBlank

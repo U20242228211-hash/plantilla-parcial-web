@@ -3,6 +3,7 @@ package com.usco.plantilla_parcial_web.config;
 import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -28,6 +29,17 @@ public class SecurityConfig {
 						.requestMatchers("/vehiculos/nuevo", "/vehiculos/guardar", "/vehiculos/editar/**",
 								"/vehiculos/actualizar/**", "/vehiculos/eliminar/**")
 						.hasAuthority("ROLE_ADMINISTRADOR")
+						.requestMatchers(HttpMethod.POST, "/api/vehiculos")
+						.hasAuthority("ROLE_ADMINISTRADOR")
+						.requestMatchers(HttpMethod.PUT, "/api/vehiculos/*")
+						.hasAuthority("ROLE_ADMINISTRADOR")
+						.requestMatchers(HttpMethod.DELETE, "/api/vehiculos/*")
+						.hasAuthority("ROLE_ADMINISTRADOR")
+						.requestMatchers(HttpMethod.PATCH, "/api/vehiculos/*/ubicacion")
+						.hasAnyAuthority("ROLE_ADMINISTRADOR", "ROLE_ACOMODADOR")
+						.requestMatchers(HttpMethod.GET, "/api/vehiculos", "/api/vehiculos/*", "/api/tipos-vehiculo",
+								"/api/tipos-vehiculo/*")
+						.hasAnyAuthority("ROLE_ADMINISTRADOR", "ROLE_ACOMODADOR", "ROLE_CLIENTE")
 						.requestMatchers("/vehiculos/ubicacion/**")
 						.hasAnyAuthority("ROLE_ADMINISTRADOR", "ROLE_ACOMODADOR")
 						.requestMatchers("/vehiculos", "/vehiculos/**")
@@ -53,6 +65,7 @@ public class SecurityConfig {
 				// Muestra una pagina propia cuando el usuario no tiene permiso.
 				.exceptionHandling(exception -> exception
 						.accessDeniedPage("/acceso-denegado"));
+		http.csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"));
 
 		return http.build();
 	}
